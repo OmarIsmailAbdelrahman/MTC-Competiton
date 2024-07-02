@@ -53,3 +53,6 @@ optional arguments:
                         Output CSV file name.
   --batch_size BATCH_SIZE
                         Batch size for transcription.
+## Datasets
+checkpoints for the final results
+https://www.kaggle.com/datasets/mohamedmotawie/final-submission
