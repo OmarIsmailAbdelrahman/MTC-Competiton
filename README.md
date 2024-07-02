@@ -21,7 +21,7 @@
 
 ### 3. KenLM N-gram
 - Created multiple n-grams (3 to 6) using the train/adapt dataset, resulting in small output changes.
-- Constructed n-grams using the Egyptian Datasets Collection (2.5 million rows), improving performance slightly from 13% to 11% WER.
+- Constructed n-grams using the Egyptian Datasets Collection (2.5 million rows), improving performance slightly.
 
 ### 4. Knowledge Distillation Model
 - Attempted knowledge distillation with Wav2Vec2 and NeMo but failed due to mismatched decoder lengths.
@@ -31,6 +31,7 @@
 - Used FAdam to reduce training time and enhance model stability.
 - Demonstrated better results with NeMo CTC Conformer, reaching 35 epochs before overfitting, and 25 epochs in normal training.
 - Reference "https://arxiv.org/abs/2405.12807"
+
 ### 6. Tokenizer Experiments
 - Tried different tokenizers; unigram and BPE produced the best and similar results.
 
