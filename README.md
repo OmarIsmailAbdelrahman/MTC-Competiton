@@ -30,7 +30,7 @@
 ### 5. FAdam Optimization
 - Used FAdam to reduce training time and enhance model stability.
 - Demonstrated better results with NeMo CTC Conformer, reaching 35 epochs before overfitting, and 25 epochs in normal training.
-
+- Reference "https://arxiv.org/abs/2405.12807"
 ### 6. Tokenizer Experiments
 - Tried different tokenizers; unigram and BPE produced the best and similar results.
 
