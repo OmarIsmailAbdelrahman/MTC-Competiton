@@ -7,13 +7,17 @@
 - Overfitted in the normal configuration at 25 epochs; fine-tuned for an additional 10 epochs.
 - Utilized FAdam for optimization.
 
-![Conformer CTC on NeMo](https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/73082049/2013718c-4a09-49d1-af5e-d3dd6ec0f8bb)
+<p align="center">
+  <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/73082049/2013718c-4a09-49d1-af5e-d3dd6ec0f8bb" alt="Conformer CTC on NeMo"/>
+</p>
 
 ### 2. Wav2Vec2 Pretraining
 - Pretrained Wav2Vec2 but encountered instability, leading to NaN values.
 - Instability occurred after 100 epochs with FAdam and 300 epochs with WAdam.
 
-![Wav2Vec2 Pretraining](https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/73082049/00660b8d-7726-479c-9102-9d3f7eb3e865)
+<p align="center">
+  <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/73082049/00660b8d-7726-479c-9102-9d3f7eb3e865" alt="Wav2Vec2 Pretraining"/>
+</p>
 
 ### 3. KenLM N-gram
 - Created multiple n-grams (3 to 6) using the train/adapt dataset, resulting in small output changes.
