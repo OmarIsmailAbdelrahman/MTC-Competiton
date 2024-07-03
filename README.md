@@ -1,5 +1,8 @@
 # MTC-Competition
 
+## Introduction
+This repo presents our approach and findings in the MTC-Competition. We detail our [experiments](#experiments), [methodologies](#final-approach-conformer-ctc-3-using-nemo-framework), and the [challenges](#challenges-faced-during-training) we faced, highlighting our work with models like Wav2Vec2 and Conformer-CTC, and optimization strategies.
+
 ## Experiments
 
 ### 1. Wav2Vec2 [[1]](#References)
@@ -27,7 +30,7 @@ the pre-training stage of wav2vec2.
 
 ### 2. FAdam optimizer [[2]](#References)
 
-introduces several improvements over traditional Adam, particularly benefiting Automatic Speech Recognition (ASR):
+Introduces several improvements over traditional Adam, particularly benefiting Automatic Speech Recognition (ASR):
 #### Key Improvements
 1. **Enhanced Performance in ASR**:
     - **State-of-the-Art Results**: Coupled with w2v-bert, achieves new state-of-the-art word error rates (WER) on the LibriSpeech dataset with a 600 million parameter Conformer model, outperforming Adam.
@@ -50,8 +53,8 @@ transformers, and CTC for speech recognition tasks.
 </p>
 
 ### Configurations and trials:
-- Utilized FAdam for optimization.
--  Training with precision 32 and 16
+- Utilized FAdam optimizer.
+-  Training with precision 32 and 16. There results was similar 32 just took more training time compared to 16.
 #### Tokenizers Configurations:
   - Added custom \<fill> \<overlap> \<laugh> tokens
   - Tokenization types:
@@ -75,7 +78,7 @@ We decided to use conformer-ctc as its less computationally expensive and yields
 | **Advantages**      | Simpler, effective for alignment tasks, less computationally intensive | Handles long-range dependencies, better for complex alignments, suitable for real-time applications |
 | **Disadvantages**   | Struggles with long sequences, less effective with context | More complex, computationally intensive |
 
-#### Data Augmentations:
+#### Data Augmentations used:
 SpecAugment is a data augmentation technique specifically designed for speech recognition tasks. It applies various transformations to the spectrograms of audio signals to make the model more robust and improve its generalization capability. It includes the following transformations:
 
 1. **Time Warping**:
@@ -90,14 +93,14 @@ SpecAugment is a data augmentation technique specifically designed for speech re
 These augmentations are applied randomly and independently during training, which helps create a more diverse training set and prevents overfitting.
 
 
-### Why use Language model
+#### Why use Language model
 - In an Automatic Speech Recognition (ASR) system, a language model is essential for improving transcription accuracy and reliability. It provides contextual understanding, corrects errors from acoustic misinterpretations. By predicting word sequences, it enhances word accuracy, ensures coherent sentence structures. Overall, they enable the ASR system to produce accurate, meaningful, and contextually appropriate transcriptions.
 - We attempted to build a n-gram language model using the train and adapt transcripts. Also, tried using Egyptian Datasets Collection which is composed of 2.5 million rows after cleaning and removing emojis.
 - Beam search is used in n-grams to avoid repeated phrases and improve the diversity and fluency of the generated text.
 - We created multiple n-grams (3 to 6) but the results was worse and not as expected, as the beam search parameters needed extensive trial and error, so it was not included in the final model. 
 
 
-### Challenges faced during training:
+#### Challenges faced during training:
 The initial nemo config for the model used a very high learning rate which made
   using bpe and char tokenizers based models show no predictions even after training for many epochs but worked fine for
   unigram based tokenizers which was confusing.
