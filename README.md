@@ -103,7 +103,7 @@ unigram based tokenizers which was confusing.
 ### 3. KenLM N-gram
 - Created multiple n-grams (3 to 6) using the train/adapt dataset, resulting in small output changes.
 - Constructed n-grams using the Egyptian Datasets Collection (2.5 million rows), improving performance slightly.
-
+- We tried to integrate it with the acoustic model, but the results was worse or no difference :(
 
 ## Conformer-CTC Inference
 
@@ -125,8 +125,8 @@ optional arguments:
                         Batch size for transcription.
 ```
 ## Checkpoints
-checkpoints for the final results
-https://www.kaggle.com/datasets/youssefbayoumy/sussy-baka
+checkpoints for the final results.
+https://www.kaggle.com/datasets/bigsus/final-submission
 
 ## references
 [1] https://arxiv.org/pdf/2006.11477 <br>
