@@ -2,7 +2,7 @@
 
 ## Experiments
 
-### 1. Wav2Vec2 [1]
+### 1. [Wav2Vec2][1]
 #### Key features
 - **Self-Supervised Learning**: Learns speech representations without the need for transcriptions during pre-training.
 - **Transformer Architecture**: Uses a transformer-based model to process speech data.
@@ -145,14 +145,14 @@ optional arguments:
 
 
 ## Checkpoints
-checkpoints for the final results. The checkpoint is in 
+The checkpoint is in this [kaggle dataset](https://www.kaggle.com/datasets/bigsus/final-submission
+)
 ```
 /final-submission/results/Some name of our experiment/checkpoints/Some name of our experiment.nemo
 ```
-https://www.kaggle.com/datasets/bigsus/final-submission
 
 ## references
-[1] https://arxiv.org/pdf/2006.11477 <br>
+[1]: https://arxiv.org/pdf/2006.11477 <br>
 [2] https://arxiv.org/pdf/2405.12807v7 <br>
 [3] https://arxiv.org/pdf/2005.08100 <br>
 [4] https://arxiv.org/pdf/2305.05084 <br>
