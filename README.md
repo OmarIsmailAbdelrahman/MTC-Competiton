@@ -44,16 +44,29 @@ introduces several improvements over traditional Adam, particularly benefiting A
 Currently, conformer and Fast conformer[4] based models hold the state-of-the-art performance for speech recognition and processing tasks.
 The Conformer-CTC model is a type of neural network architecture that combines the strengths of convolutional neural networks (CNNs),
 transformers, and CTC for speech recognition tasks.
-#### Configuration:
-- Utilized FAdam for optimization.
-- Tried multiple tokenizers:
-   - **Unigram**: Utilizes a subword segmentation algorithm based on a unigram language model. It aims to find the most likely subword units given the training data, maximizing the likelihood of the training corpus.
-   - **BPE (Byte-Pair Encoding)**: Iteratively merges the most frequent pairs of bytes or characters. It is particularly effective for text compression and is widely used in neural machine translation systems. BPE is the default tokenization type in SentencePiece.
-   - **Char**: Treats each character as a token. 
 
 <p align="center">
   <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/81030289/455cf6ab-9138-478a-b63a-ff8617909da4" alt="Conformer architecure"/>
 </p>
+
+#### Configurations and trials:
+- Utilized FAdam for optimization.
+- Tried multiple tokenizers:
+   - **Unigram**: Utilizes a subword segmentation algorithm based on a unigram language model. It aims to find the most likely subword units given the training data, maximizing the likelihood of the training corpus.
+   - **BPE (Byte-Pair Encoding)**: Iteratively merges the most frequent pairs of bytes or characters. It is particularly effective for text compression and is widely used in neural machine translation systems. BPE is the default tokenization type in SentencePiece.
+   - **Char**: Treats each character as a token.
+
+There are two losses/decoders that can be used with a conformer, conformer-ctc and conformer-transducer.
+We decided to use conformer-ctc as its less computationally expensive and yields good results.
+
+| Feature             | Conformer-CTC                         | Conformer-Transducer                    |
+|---------------------|---------------------------------------|-----------------------------------------|
+| **Architecture**    | Conformer layers + CTC loss           | Conformer encoder + transducer framework|
+| **Loss Function**   | Connectionist Temporal Classification (CTC) | Transducer (RNN-T)                      |
+| **Output**          | Probability distribution over sequences | Sequence of probability distributions conditioned on input and previous outputs |
+| **Advantages**      | Simpler, effective for alignment tasks, less computationally intensive | Handles long-range dependencies, better for complex alignments, suitable for real-time applications |
+| **Disadvantages**   | Struggles with long sequences, less effective with context | More complex, computationally intensive |
+
 <p align="center">
   <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/73082049/2013718c-4a09-49d1-af5e-d3dd6ec0f8bb" alt="Conformer CTC on NeMo"/>
 </p>
@@ -91,7 +104,7 @@ checkpoints for the final results
 https://www.kaggle.com/datasets/mohamedmotawie/final-submission
 
 ## references
-[1] https://arxiv.org/pdf/2006.11477
-[2] https://arxiv.org/pdf/2405.12807v7
-[3] https://arxiv.org/pdf/2005.08100
-[4] https://arxiv.org/pdf/2305.05084
+[1] https://arxiv.org/pdf/2006.11477 <br>
+[2] https://arxiv.org/pdf/2405.12807v7 <br>
+[3] https://arxiv.org/pdf/2005.08100 <br>
+[4] https://arxiv.org/pdf/2305.05084 <br>
