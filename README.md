@@ -25,25 +25,31 @@ the pre-training stage of wav2vec2.
   <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/73082049/00660b8d-7726-479c-9102-9d3f7eb3e865" alt="Wav2Vec2 Pretraining"/>
 </p>
 
-### 2. FAdam optimizer
+### 2. FAdam optimizer [2]
 
 introduces several improvements over traditional Adam, particularly benefiting Automatic Speech Recognition (ASR):
 #### Key Improvements
-2. **Enhanced Performance in ASR**:
+1. **Enhanced Performance in ASR**:
     - **State-of-the-Art Results**: Coupled with w2v-bert, achieves new state-of-the-art word error rates (WER) on the LibriSpeech dataset with a 600 million parameter Conformer model, outperforming Adam.
     - **Superior Fine-Tuning**: Demonstrates significant improvements in semi-supervised fine-tuning of ASR models, leading to better overall accuracy and reliability.
-3. **Adaptive Mechanisms**: Includes adaptive epsilon, gradient clipping, and refined weight decay, which enhance stability and reduce the need for extensive hyperparameter tuning.
+2. **Adaptive Mechanisms**: Includes adaptive epsilon, gradient clipping, and refined weight decay, which enhance stability and reduce the need for extensive hyperparameter tuning.
 
-4. **Robust Convergence**: Provides stronger convergence guarantees through the application of momentum to the natural gradient, making the optimization process more reliable.
+3. **Robust Convergence**: Provides stronger convergence guarantees through the application of momentum to the natural gradient, making the optimization process more reliable.
 
 ### 3. Knowledge Distillation Model
 - Attempted knowledge distillation with Wav2Vec2 and Conformer-CTC but failed due to mismatched decoder lengths.
 - Potential solution: Adjust transformer heads to match the output.
 
-### 4. Conformer CTC on NeMo
-- Achieved the best and most stable results compared to Wav2Vec2.
-- Overfitted in the normal configuration at 25 epochs; fine-tuned for an additional 10 epochs.
+## Final approach: Conformer CTC [3]  using NeMo Framework
+Currently, conformer and Fast conformer[4] based models hold the state-of-the-art performance for speech recognition and processing tasks.
+The Conformer-CTC model is a type of neural network architecture that combines the strengths of convolutional neural networks (CNNs),
+transformers, and CTC for speech recognition tasks.
+#### Configuration:
 - Utilized FAdam for optimization.
+- Tried multiple tokenizers:
+   - **Unigram**: Utilizes a subword segmentation algorithm based on a unigram language model. It aims to find the most likely subword units given the training data, maximizing the likelihood of the training corpus.
+   - **BPE (Byte-Pair Encoding)**: Iteratively merges the most frequent pairs of bytes or characters. It is particularly effective for text compression and is widely used in neural machine translation systems. BPE is the default tokenization type in SentencePiece.
+   - **Char**: Treats each character as a token. 
 
 <p align="center">
   <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/81030289/455cf6ab-9138-478a-b63a-ff8617909da4" alt="Conformer architecure"/>
@@ -57,10 +63,6 @@ introduces several improvements over traditional Adam, particularly benefiting A
 - Created multiple n-grams (3 to 6) using the train/adapt dataset, resulting in small output changes.
 - Constructed n-grams using the Egyptian Datasets Collection (2.5 million rows), improving performance slightly.
 
-### 5. FAdam Optimization
-- Used FAdam to reduce training time and enhance model stability.
-- Demonstrated better results with NeMo CTC Conformer, reaching 35 epochs before overfitting, and 25 epochs in normal training.
-- Reference "https://arxiv.org/abs/2405.12807"
 
 ### 6. Tokenizer Experiments
 - Tried different tokenizers; unigram and BPE produced the best and similar results.
@@ -84,10 +86,12 @@ optional arguments:
   --batch_size BATCH_SIZE
                         Batch size for transcription.
 ```
-## Datasets
+## Checkpoints
 checkpoints for the final results
 https://www.kaggle.com/datasets/mohamedmotawie/final-submission
 
 ## references
 [1] https://arxiv.org/pdf/2006.11477
 [2] https://arxiv.org/pdf/2405.12807v7
+[3] https://arxiv.org/pdf/2005.08100
+[4] https://arxiv.org/pdf/2305.05084
