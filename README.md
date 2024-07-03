@@ -90,9 +90,7 @@ SpecAugment is a data augmentation technique specifically designed for speech re
 These augmentations are applied randomly and independently during training, which helps create a more diverse training set and prevents overfitting.
 
 
-<p align="center">
-  <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/73082049/2013718c-4a09-49d1-af5e-d3dd6ec0f8bb" alt="Conformer CTC on NeMo"/>
-</p>
+
 
 #### Challenges faced during training:
 - The initial nemo config for the model used a very high learning rate which made
@@ -105,11 +103,24 @@ unigram based tokenizers which was confusing.
 - Constructed n-grams using the Egyptian Datasets Collection (2.5 million rows), improving performance slightly.
 - We tried to integrate it with the acoustic model, but the results was worse or no difference :(
 
+
 ### final model configuration:
 - Conformer-CTC Large
 - precision: 32
 - tokenizer: spe unigram
 - optimizer: Fadam
+
+### result
+ - This one of the results of the unigram tokenizer model. 
+This due to the high learning rate set by default, which we discovered late.
+<p align="center">
+  <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/73082049/2013718c-4a09-49d1-af5e-d3dd6ec0f8bb" alt="Conformer CTC on NeMo"/>
+</p>
+
+- After reducing the learning rate and using char tokenizer, a smooth decrease in wer was achieved but this model needed more training and we did not have enough time to submit its results.
+<p align="center">
+  <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/81030289/9af5b2d8-e3b4-4ad3-b152-12679b4a36d4" alt="Char tokenizer results"/>
+</p>
 
 ## Conformer-CTC Inference
 
