@@ -2,7 +2,29 @@
 
 ## Experiments
 
-### 1. Conformer CTC on NeMo
+### 1. Wav2Vec2
+#### Key features
+- **Self-Supervised Learning**: Learns speech representations without the need for transcriptions during pre-training.
+- **Transformer Architecture**: Uses a transformer-based model to process speech data.
+- **Quantization**: Applies quantization to the continuous speech representations, aiding in learning discrete latent speech units.
+- **Fine-Tuning**: The pre-trained model can be fine-tuned on labeled data for specific ASR tasks.
+
+<p align="center">
+  <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/81030289/371fae8f-fea0-45b1-ab24-58d33845935f" alt="Wav2Vec2 architecture"/>
+</p>
+#### Experiment 1
+We aimed to use wav2vec2 as it had achieved state-of-the-art on multiple datasets 
+and had implementations and documentations from popular libraries and sources like pytorch and huggingface.
+However, due to the limitations of not using pre-trained models, we faced issues and instability in 
+the pre-training stage of wav2vec2.
+- Encountered instability, leading to issues with the gradient and NaN values.
+- Instability occurred after 100 steps with FAdam and 300 steps with WAdam.
+
+<p align="center">
+  <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/73082049/00660b8d-7726-479c-9102-9d3f7eb3e865" alt="Wav2Vec2 Pretraining"/>
+</p>
+
+### 2. Conformer CTC on NeMo
 - Achieved the best and most stable results compared to Wav2Vec2.
 - Overfitted in the normal configuration at 25 epochs; fine-tuned for an additional 10 epochs.
 - Utilized FAdam for optimization.
@@ -11,13 +33,6 @@
   <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/73082049/2013718c-4a09-49d1-af5e-d3dd6ec0f8bb" alt="Conformer CTC on NeMo"/>
 </p>
 
-### 2. Wav2Vec2 Pretraining
-- Pretrained Wav2Vec2 but encountered instability, leading to NaN values.
-- Instability occurred after 100 steps with FAdam and 300 steps with WAdam.
-
-<p align="center">
-  <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/73082049/00660b8d-7726-479c-9102-9d3f7eb3e865" alt="Wav2Vec2 Pretraining"/>
-</p>
 
 ### 3. KenLM N-gram
 - Created multiple n-grams (3 to 6) using the train/adapt dataset, resulting in small output changes.
