@@ -81,18 +81,21 @@ SpecAugment is a data augmentation technique specifically designed for speech re
 
 These augmentations are applied randomly and independently during training, which helps create a more diverse training set and prevents overfitting.
 
+
 <p align="center">
   <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/73082049/2013718c-4a09-49d1-af5e-d3dd6ec0f8bb" alt="Conformer CTC on NeMo"/>
 </p>
+
+#### Challenges faces during training:
+- The initial nemo config for the model used a very high learning rate which made
+using bpe and char tokenizers based models show no predictions even after training for many epochs but worked fine for
+unigram based tokenizers which was confusing.
 
 
 ### 3. KenLM N-gram
 - Created multiple n-grams (3 to 6) using the train/adapt dataset, resulting in small output changes.
 - Constructed n-grams using the Egyptian Datasets Collection (2.5 million rows), improving performance slightly.
 
-
-### 6. Tokenizer Experiments
-- Tried different tokenizers; unigram and BPE produced the best and similar results.
 
 ## Conformer-CTC Inference
 
