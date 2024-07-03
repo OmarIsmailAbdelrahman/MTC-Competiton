@@ -2,7 +2,7 @@
 
 ## Experiments
 
-### 1. Wav2Vec2
+### 1. Wav2Vec2 [1]
 #### Key features
 - **Self-Supervised Learning**: Learns speech representations without the need for transcriptions during pre-training.
 - **Transformer Architecture**: Uses a transformer-based model to process speech data.
@@ -13,7 +13,7 @@
   <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/81030289/371fae8f-fea0-45b1-ab24-58d33845935f" alt="Wav2Vec2 architecture"/>
 </p>
 
-#### Experiment 1
+#### Trials and results
 We aimed to use wav2vec2 as it had achieved state-of-the-art on multiple datasets 
 and had implementations and documentations from popular libraries and sources like pytorch and huggingface.
 However, due to the limitations of not using pre-trained models, we faced issues and instability in 
@@ -25,11 +25,29 @@ the pre-training stage of wav2vec2.
   <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/73082049/00660b8d-7726-479c-9102-9d3f7eb3e865" alt="Wav2Vec2 Pretraining"/>
 </p>
 
-### 2. Conformer CTC on NeMo
+### 2. FAdam optimizer
+
+introduces several improvements over traditional Adam, particularly benefiting Automatic Speech Recognition (ASR):
+#### Key Improvements
+2. **Enhanced Performance in ASR**:
+    - **State-of-the-Art Results**: Coupled with w2v-bert, achieves new state-of-the-art word error rates (WER) on the LibriSpeech dataset with a 600 million parameter Conformer model, outperforming Adam.
+    - **Superior Fine-Tuning**: Demonstrates significant improvements in semi-supervised fine-tuning of ASR models, leading to better overall accuracy and reliability.
+3. **Adaptive Mechanisms**: Includes adaptive epsilon, gradient clipping, and refined weight decay, which enhance stability and reduce the need for extensive hyperparameter tuning.
+
+4. **Robust Convergence**: Provides stronger convergence guarantees through the application of momentum to the natural gradient, making the optimization process more reliable.
+
+### 3. Knowledge Distillation Model
+- Attempted knowledge distillation with Wav2Vec2 and Conformer-CTC but failed due to mismatched decoder lengths.
+- Potential solution: Adjust transformer heads to match the output.
+
+### 4. Conformer CTC on NeMo
 - Achieved the best and most stable results compared to Wav2Vec2.
 - Overfitted in the normal configuration at 25 epochs; fine-tuned for an additional 10 epochs.
 - Utilized FAdam for optimization.
 
+<p align="center">
+  <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/81030289/455cf6ab-9138-478a-b63a-ff8617909da4" alt="Conformer architecure"/>
+</p>
 <p align="center">
   <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/73082049/2013718c-4a09-49d1-af5e-d3dd6ec0f8bb" alt="Conformer CTC on NeMo"/>
 </p>
@@ -38,10 +56,6 @@ the pre-training stage of wav2vec2.
 ### 3. KenLM N-gram
 - Created multiple n-grams (3 to 6) using the train/adapt dataset, resulting in small output changes.
 - Constructed n-grams using the Egyptian Datasets Collection (2.5 million rows), improving performance slightly.
-
-### 4. Knowledge Distillation Model
-- Attempted knowledge distillation with Wav2Vec2 and NeMo but failed due to mismatched decoder lengths.
-- Potential solution: Adjust transformer heads to match the output.
 
 ### 5. FAdam Optimization
 - Used FAdam to reduce training time and enhance model stability.
@@ -73,3 +87,7 @@ optional arguments:
 ## Datasets
 checkpoints for the final results
 https://www.kaggle.com/datasets/mohamedmotawie/final-submission
+
+## references
+[1] https://arxiv.org/pdf/2006.11477
+[2] https://arxiv.org/pdf/2405.12807v7
