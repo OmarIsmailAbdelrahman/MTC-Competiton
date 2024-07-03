@@ -67,6 +67,20 @@ We decided to use conformer-ctc as its less computationally expensive and yields
 | **Advantages**      | Simpler, effective for alignment tasks, less computationally intensive | Handles long-range dependencies, better for complex alignments, suitable for real-time applications |
 | **Disadvantages**   | Struggles with long sequences, less effective with context | More complex, computationally intensive |
 
+#### Spec Augment:
+SpecAugment is a data augmentation technique specifically designed for speech recognition tasks. It applies various transformations to the spectrograms of audio signals to make the model more robust and improve its generalization capability. Here are the key components of SpecAugment:
+
+1. **Time Warping**:
+   - Time warping shifts the spectrogram in the time direction. This simulates slight variations in speaking speed and timing, making the model more robust to variations in speech patterns.
+
+2. **Frequency Masking**:
+   - In frequency masking, one or more ranges of frequencies are masked (set to zero) randomly. This means certain frequency bands are removed, which forces the model to learn to handle missing frequency information. This technique helps the model become more invariant to different acoustic conditions.
+
+3. **Time Masking**:
+   - Similar to frequency masking, time masking involves masking out one or more time segments of the spectrogram. This means certain time intervals are set to zero, encouraging the model to handle parts of the audio being missing or occluded, which can occur in real-world scenarios like overlapping speech or background noise.
+
+These augmentations are applied randomly and independently during training, which helps create a more diverse training set and prevents overfitting.
+
 <p align="center">
   <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/73082049/2013718c-4a09-49d1-af5e-d3dd6ec0f8bb" alt="Conformer CTC on NeMo"/>
 </p>
