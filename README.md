@@ -126,7 +126,7 @@ optional arguments:
 ```
 ## Checkpoints
 checkpoints for the final results
-https://www.kaggle.com/datasets/mohamedmotawie/final-submission
+https://www.kaggle.com/datasets/youssefbayoumy/sussy-baka
 
 ## references
 [1] https://arxiv.org/pdf/2006.11477 <br>
