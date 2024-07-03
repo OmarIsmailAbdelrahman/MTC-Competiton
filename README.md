@@ -12,6 +12,7 @@
 <p align="center">
   <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/81030289/371fae8f-fea0-45b1-ab24-58d33845935f" alt="Wav2Vec2 architecture"/>
 </p>
+
 #### Experiment 1
 We aimed to use wav2vec2 as it had achieved state-of-the-art on multiple datasets 
 and had implementations and documentations from popular libraries and sources like pytorch and huggingface.
