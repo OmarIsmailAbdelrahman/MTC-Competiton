@@ -86,7 +86,7 @@ These augmentations are applied randomly and independently during training, whic
   <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/73082049/2013718c-4a09-49d1-af5e-d3dd6ec0f8bb" alt="Conformer CTC on NeMo"/>
 </p>
 
-#### Challenges faces during training:
+#### Challenges faced during training:
 - The initial nemo config for the model used a very high learning rate which made
 using bpe and char tokenizers based models show no predictions even after training for many epochs but worked fine for
 unigram based tokenizers which was confusing.
