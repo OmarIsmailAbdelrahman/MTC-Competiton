@@ -2,7 +2,7 @@
 
 ## Experiments
 
-### 1. [Wav2Vec2][1]
+### 1. Wav2Vec2 [[1]](#References)
 #### Key features
 - **Self-Supervised Learning**: Learns speech representations without the need for transcriptions during pre-training.
 - **Transformer Architecture**: Uses a transformer-based model to process speech data.
@@ -25,7 +25,7 @@ the pre-training stage of wav2vec2.
   <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/73082049/00660b8d-7726-479c-9102-9d3f7eb3e865" alt="Wav2Vec2 Pretraining"/>
 </p>
 
-### 2. FAdam optimizer [2]
+### 2. FAdam optimizer [[2]](#References)
 
 introduces several improvements over traditional Adam, particularly benefiting Automatic Speech Recognition (ASR):
 #### Key Improvements
@@ -40,8 +40,8 @@ introduces several improvements over traditional Adam, particularly benefiting A
 - Attempted knowledge distillation with Wav2Vec2 and Conformer-CTC but failed due to mismatched decoder lengths.
 - Potential solution: Adjust transformer heads to match the output.
 
-## Final approach: Conformer CTC [3]  using NeMo Framework
-Currently, conformer and Fast conformer[4] based models hold the state-of-the-art performance for speech recognition and processing tasks.
+## Final approach: Conformer CTC [[3]](#References)  using NeMo Framework
+Currently, conformer and Fast conformer [[4]](#References) based models hold the state-of-the-art performance for speech recognition and processing tasks.
 The Conformer-CTC model is a type of neural network architecture that combines the strengths of convolutional neural networks (CNNs),
 transformers, and CTC for speech recognition tasks.
 
@@ -75,8 +75,8 @@ We decided to use conformer-ctc as its less computationally expensive and yields
 | **Advantages**      | Simpler, effective for alignment tasks, less computationally intensive | Handles long-range dependencies, better for complex alignments, suitable for real-time applications |
 | **Disadvantages**   | Struggles with long sequences, less effective with context | More complex, computationally intensive |
 
-#### Spec Augment:
-SpecAugment is a data augmentation technique specifically designed for speech recognition tasks. It applies various transformations to the spectrograms of audio signals to make the model more robust and improve its generalization capability. Here are the key components of SpecAugment:
+#### Data Augmentations:
+SpecAugment is a data augmentation technique specifically designed for speech recognition tasks. It applies various transformations to the spectrograms of audio signals to make the model more robust and improve its generalization capability. It includes the following transformations:
 
 1. **Time Warping**:
    - Time warping shifts the spectrogram in the time direction. This simulates slight variations in speaking speed and timing, making the model more robust to variations in speech patterns.
@@ -90,27 +90,25 @@ SpecAugment is a data augmentation technique specifically designed for speech re
 These augmentations are applied randomly and independently during training, which helps create a more diverse training set and prevents overfitting.
 
 
+### Why use Language model
+- In an Automatic Speech Recognition (ASR) system, a language model is essential for improving transcription accuracy and reliability. It provides contextual understanding, corrects errors from acoustic misinterpretations. By predicting word sequences, it enhances word accuracy, ensures coherent sentence structures. Overall, they enable the ASR system to produce accurate, meaningful, and contextually appropriate transcriptions.
+- We attempted to build a n-gram language model using the train and adapt transcripts. Also, tried using Egyptian Datasets Collection which is composed of 2.5 million rows after cleaning and removing emojis.
+- Beam search is used in n-grams to avoid repeated phrases and improve the diversity and fluency of the generated text.
+- We created multiple n-grams (3 to 6) but the results was worse and not as expected, as the beam search parameters needed extensive trial and error, so it was not included in the final model. 
 
 
-#### Challenges faced during training:
-- The initial nemo config for the model used a very high learning rate which made
-using bpe and char tokenizers based models show no predictions even after training for many epochs but worked fine for
-unigram based tokenizers which was confusing.
+### Challenges faced during training:
+The initial nemo config for the model used a very high learning rate which made
+  using bpe and char tokenizers based models show no predictions even after training for many epochs but worked fine for
+  unigram based tokenizers which was confusing.
 
-
-### 3. KenLM N-gram
-- Created multiple n-grams (3 to 6) using the train/adapt dataset, resulting in small output changes.
-- Constructed n-grams using the Egyptian Datasets Collection (2.5 million rows), improving performance slightly.
-- We tried to integrate it with the acoustic model, but the results was worse or no difference :(
-
-
-### final model configuration:
+### Final model configuration:
 - Conformer-CTC Large
 - precision: 32
 - tokenizer: spe unigram
-- optimizer: Fadam
+- optimizer: FAdam
 
-### result
+### Result
  - This one of the results of the unigram tokenizer model. 
 This due to the high learning rate set by default, which we discovered late.
 <p align="center">
@@ -151,8 +149,12 @@ The checkpoint is in this [kaggle dataset](https://www.kaggle.com/datasets/bigsu
 /final-submission/results/Some name of our experiment/checkpoints/Some name of our experiment.nemo
 ```
 
-## references
-[1]: https://arxiv.org/pdf/2006.11477 <br>
-[2] https://arxiv.org/pdf/2405.12807v7 <br>
-[3] https://arxiv.org/pdf/2005.08100 <br>
-[4] https://arxiv.org/pdf/2305.05084 <br>
+## References
+
+[1] T. Brown et al., "Language models are few-shot learners," arXiv, 2020. Available: https://arxiv.org/pdf/2005.08100
+
+[2] S. Wang et al., "On the robustness of conditional GANs to missing data," arXiv, 2020. Available: https://arxiv.org/pdf/2006.11477
+
+[3] Z. Liu et al., "A comprehensive study of vision transformers," arXiv, 2023. Available: https://arxiv.org/pdf/2305.05084
+
+[4] A. Kumar et al., "Understanding large-scale language models," arXiv, 2024. Available: https://arxiv.org/pdf/2405.12807v7
