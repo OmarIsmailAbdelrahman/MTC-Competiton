@@ -13,7 +13,7 @@
 
 ### 2. Wav2Vec2 Pretraining
 - Pretrained Wav2Vec2 but encountered instability, leading to NaN values.
-- Instability occurred after 100 epochs with FAdam and 300 epochs with WAdam.
+- Instability occurred after 100 steps with FAdam and 300 steps with WAdam.
 
 <p align="center">
   <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/73082049/00660b8d-7726-479c-9102-9d3f7eb3e865" alt="Wav2Vec2 Pretraining"/>
