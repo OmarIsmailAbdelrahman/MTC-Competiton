@@ -49,12 +49,20 @@ transformers, and CTC for speech recognition tasks.
   <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/81030289/455cf6ab-9138-478a-b63a-ff8617909da4" alt="Conformer architecure"/>
 </p>
 
-#### Configurations and trials:
+### Configurations and trials:
 - Utilized FAdam for optimization.
-- Tried multiple tokenizers:
-   - **Unigram**: Utilizes a subword segmentation algorithm based on a unigram language model. It aims to find the most likely subword units given the training data, maximizing the likelihood of the training corpus.
-   - **BPE (Byte-Pair Encoding)**: Iteratively merges the most frequent pairs of bytes or characters. It is particularly effective for text compression and is widely used in neural machine translation systems. BPE is the default tokenization type in SentencePiece.
-   - **Char**: Treats each character as a token.
+-  Training with precision 32 and 16
+#### Tokenizers Configurations:
+  - Added custom \<fill> \<overlap> \<laugh> tokens
+  - Tokenization types:
+    - **wpe:** Handles out-of-vocabulary words by breaking them into subwords, but requires a well-prepared corpus for effective training.
+    - **SPE:** suitable for scripts with or without clear word boundaries, handles dialects like Egyptian Arabic well, 
+    but quality depends heavily on the training data's quality and size.
+  - Tokenization techniques:
+     - **Unigram**: Utilizes a subword segmentation algorithm based on a unigram language model. It aims to find the most likely subword units given the training data, maximizing the likelihood of the training corpus.
+     - **BPE (Byte-Pair Encoding)**: Iteratively merges the most frequent pairs of bytes or characters. It is particularly effective for text compression and is widely used in neural machine translation systems. BPE is the default tokenization type in SentencePiece.
+     - **Char**: Treats each character as a token.
+    
 
 There are two losses/decoders that can be used with a conformer, conformer-ctc and conformer-transducer.
 We decided to use conformer-ctc as its less computationally expensive and yields good results.
