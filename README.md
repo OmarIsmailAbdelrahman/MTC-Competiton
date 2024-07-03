@@ -105,6 +105,12 @@ unigram based tokenizers which was confusing.
 - Constructed n-grams using the Egyptian Datasets Collection (2.5 million rows), improving performance slightly.
 - We tried to integrate it with the acoustic model, but the results was worse or no difference :(
 
+### final model configuration:
+- Conformer-CTC Large
+- precision: 32
+- tokenizer: spe unigram
+- optimizer: Fadam
+
 ## Conformer-CTC Inference
 
 Script for inferring data using Conformer-CTC:
@@ -124,8 +130,14 @@ optional arguments:
   --batch_size BATCH_SIZE
                         Batch size for transcription.
 ```
+
+
+
 ## Checkpoints
-checkpoints for the final results.
+checkpoints for the final results. The checkpoint is in 
+```
+/final-submission/results/Some name of our experiment/checkpoints/Some name of our experiment.nemo
+```
 https://www.kaggle.com/datasets/bigsus/final-submission
 
 ## references
