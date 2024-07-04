@@ -162,7 +162,7 @@ After reaching convergence, we fine-tuned on adapt dataset for a few epochs.
 
 ### Results
  - This one of the results of the [unigram](#tokenizers-configurations) tokenizer model. 
-The fluctuations in the wer are due to the high learning rate set by default, which we discovered late. However, this the model still achieved the best results and was used for the final submission that achieved 11.994785 [`Mean Levenshtein Distance`](https://en.wikipedia.org/wiki/Levenshtein_distance).
+The fluctuations in the `wer` are due to the high learning rate set by default, which we discovered late. However, this model still achieved the best results and was used for the final submission that achieved 11.994785 [`Mean Levenshtein Distance`](https://en.wikipedia.org/wiki/Levenshtein_distance).
 <p align="center">
   <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/73082049/2013718c-4a09-49d1-af5e-d3dd6ec0f8bb" alt="Conformer CTC on NeMo"/>
 </p>
