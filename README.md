@@ -26,7 +26,7 @@ Our initial trials with Wav2Vec2 aimed to replicate its documented success on va
 
 These issues severely hindered our progress, making it clear that we needed a different strategy to stabilize the training process.
 
-## Turning to the [FAdam Optimizer](#2-fadam-optimizer-2) [[2]](#References)
+## Turning to the FAdam Optimizer [[2]](#References)
 In our quest for stability, we explored the FAdam optimizer, an enhancement over the traditional Adam optimizer, particularly suited for ASR tasks. FAdam introduces several modifications to address common issues faced during the training of large neural networks.
 
 ### **Key Features of FAdam**
