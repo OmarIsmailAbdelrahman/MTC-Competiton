@@ -1,7 +1,7 @@
 # MTC-Competition
 
 ## Introduction
-This repo presents our approach and findings in the MTC-Competition. We detail our [experiments](#experiments), [methodologies](#final-approach-conformer-ctc-3-using-nemo-framework), and the [challenges](#challenges-faced-during-training) we faced, highlighting our work with models like Wav2Vec2 and Conformer-CTC, and optimization strategies.
+This repo presents our approach and findings in the MTC-Competition. We detail our [experiments](#experiments), [methodologies](#final-approach-conformer-ctc-3-using-nemo-framework), and the [challenges](#challenges-faced-during-training) we faced, highlighting our work with models like Wav2Vec2 and [Conformer-CTC](#final-approach-conformer-ctc-3-using-nemo-framework), and optimization strategies.
 
 ## Experiments
 
@@ -20,8 +20,8 @@ This repo presents our approach and findings in the MTC-Competition. We detail o
 We aimed to use wav2vec2 as it had achieved state-of-the-art on multiple datasets 
 and had implementations and documentations from popular libraries and sources like pytorch and huggingface.
 However, due to the limitations of not using pre-trained models, we faced issues and instability in 
-the pre-training stage of wav2vec2.
-- Encountered instability, leading to issues with the gradient and NaN values.
+the pre-training stage of wav2vec2. After searching for other models, we found [FAdam](#2-fadam-optimizer-2) which is an optimizer that greatly improves the model performance and stability. We attempted to use FAdam with wav2vec2 and it improved the stability for more steps, but it still faces the same issue.
+- Encountered instability, leading to issues with the gradients and NaN values.
 - Instability occurred after 100 steps with FAdam and 300 steps with WAdam.
 
 <p align="center">
@@ -56,7 +56,7 @@ transformers, and CTC for speech recognition tasks.
 - Utilized FAdam optimizer.
 -  Training with precision 32 and 16. There results was similar 32 just took more training time compared to 16.
 #### Tokenizers Configurations:
-  - Added custom \<fill> \<overlap> \<laugh> tokens
+  - Added  `<fill>` `<overlap>` `<laugh>` tokens that was present in the transcriptions. Note: these tokens was not included in the submitted model as  what we submitted was the 1st model we created and left to train and it achieved the best accuracy. However, after more experimentation, we knew that they should be added to the tokens.
   - Tokenization types:
     - **wpe:** Handles out-of-vocabulary words by breaking them into subwords, but requires a well-prepared corpus for effective training.
     - **SPE:** suitable for scripts with or without clear word boundaries, handles dialects like Egyptian Arabic well, 
@@ -65,8 +65,25 @@ transformers, and CTC for speech recognition tasks.
      - **Unigram**: Utilizes a subword segmentation algorithm based on a unigram language model. It aims to find the most likely subword units given the training data, maximizing the likelihood of the training corpus.
      - **BPE (Byte-Pair Encoding)**: Iteratively merges the most frequent pairs of bytes or characters. It is particularly effective for text compression and is widely used in neural machine translation systems. BPE is the default tokenization type in SentencePiece.
      - **Char**: Treats each character as a token.
-    
 
+
+We used the unigram with `vocab_size` of 128 because: 
+- Reduced Vocabulary Size: By breaking down words into smaller units, it significantly reduces the vocabulary size. This makes the model more efficient and effective in processing and understanding the language.
+- Better Generalization: Smaller subword units can be recombined to form new words that the model has not explicitly seen during training. This improves the model's ability to generalize to new, unseen words.
+- The output tokens was similar to using bpe tokenizer, so we did not experiment with it extensively after solving the learning rate issue.
+
+unigram tokens: 
+<p align="center">
+  <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/81030289/f9a36541-1f66-4047-9d98-83fd6380af52" alt="Conformer CTC on NeMo"/>
+</p>
+
+We also experimented with char tokenizer as arabic has  complex letters with various diacritics and forms. It achieved good results but need more time for training. It created 44 tokens.
+<br> 
+char tokens :
+<p align="center">
+  <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/81030289/7efadcd7-5f05-4202-b299-31b357309eca" alt="Conformer CTC on NeMo"/>
+</p>
+<br>
 There are two losses/decoders that can be used with a conformer, conformer-ctc and conformer-transducer.
 We decided to use conformer-ctc as its less computationally expensive and yields good results.
 
@@ -111,14 +128,18 @@ The initial nemo config for the model used a very high learning rate which made
 - tokenizer: spe unigram
 - optimizer: FAdam
 
-### Result
- - This one of the results of the unigram tokenizer model. 
-This due to the high learning rate set by default, which we discovered late.
+### Training procedure:
+We trained using the full train dataset and used adapt as validation.
+After reaching convergence, we fine-tuned on adapt dataset for a few epochs. 
+
+### Results
+ - This one of the results of the [unigram](#tokenizers-configurations) tokenizer model. 
+This due to the high learning rate set by default, which we discovered late. This the model we submitted which achieved 11.994785 [`Mean Levenshtein Distance`](https://en.wikipedia.org/wiki/Levenshtein_distance).
 <p align="center">
   <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/73082049/2013718c-4a09-49d1-af5e-d3dd6ec0f8bb" alt="Conformer CTC on NeMo"/>
 </p>
 
-- After reducing the learning rate and using char tokenizer, a smooth decrease in wer was achieved but this model needed more training and we did not have enough time to submit its results.
+- After reducing the learning rate and using [char](#tokenizers-configurations) tokenizer, a smooth decrease in wer was achieved but this model needed more training and we did not have enough time to submit its results.
 <p align="center">
   <img src="https://github.com/OmarIsmailAbdelrahman/MTC-Competiton/assets/81030289/9af5b2d8-e3b4-4ad3-b152-12679b4a36d4" alt="Char tokenizer results"/>
 </p>
