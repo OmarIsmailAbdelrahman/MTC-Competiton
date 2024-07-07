@@ -174,7 +174,7 @@ The fluctuations in the `WER` are due to the high learning rate set by default, 
 
 ## Conformer-CTC Inference
 
-Run setup install required packages versions and dependencies:
+Run setup to install required packages versions and dependencies:
 ```
 python setup.py
 ```
