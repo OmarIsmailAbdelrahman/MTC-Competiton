@@ -3,6 +3,19 @@ import csv
 import argparse
 import nemo.collections.asr as nemo_asr
 
+BRANCH = 'r2.0.0rc0'
+
+def start_setup():
+    print("start setup")
+    os.system('pip install wget')
+    os.system('apt-get -y install sox libsndfile1 ffmpeg')
+    os.system('pip install text-unidecode')
+    os.system('pip install "matplotlib>=3.3.2"')
+    os.system('pip install aiohttp==3.9.2')
+    os.system('pip install boto3 --upgrade')
+    os.system(f'python -m pip install git+https://github.com/NVIDIA/NeMo.git@{BRANCH}#egg=nemo_toolkit[all]')
+
+
 def transcribe_audio(checkpoint_path, data_dir, output_csv='transcriptions.csv', batch_size=4):
     # Restore the ASR model from the checkpoint
     asr_model = nemo_asr.models.EncDecCTCModelBPE.restore_from(checkpoint_path)
@@ -43,6 +56,7 @@ if __name__ == "__main__":
 
     # Parse the command-line arguments
     args = parser.parse_args()
-
+    
+    start_setup()
     # Call the transcribe function with parsed arguments
     transcribe_audio(args.checkpoint_path, args.data_dir, args.output_csv, args.batch_size)
